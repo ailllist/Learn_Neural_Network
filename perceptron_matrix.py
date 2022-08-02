@@ -17,9 +17,7 @@ def stage(input_data, weights, bias):
 def back_propagation():
     pass
 
-input_data = [1, 1]
-
-stage1 = stage(input_data, [[0.5, 0.5], [0.1, 0.3]], bias=0.6)
-print(stage1)
-stage2 = stage(stage1, [0.1, 0.5], bias=1)
-print(stage2)
+stage_res = [1, 1]
+stage_info = [[[[0.5, 0.5], [0.1, 0.3]], 0.6], [[0.1, 0.5], 1]]
+for i in stage_info:
+    stage_res = stage(stage_res, i[0], bias=i[1])
