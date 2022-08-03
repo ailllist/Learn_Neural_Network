@@ -5,7 +5,7 @@ THETA = 0.4
 GT = np.array([0.7, 0.2])
 # GT = np.random.random(2)
 LEARNING_RATE = 0.4
-EPOCH = 10
+EPOCH = 20
 
 INPUT_VALUE = np.array([0.1, 0.5])
 
@@ -35,6 +35,9 @@ class NN:
         grad_weight = np.expand_dims(grad_weight, axis=1)
         n_weights2 = weights2 - LEARNING_RATE * (grad_weight @ u1)
         
+        print("u:\n\b", u1)
+        print("w:\n\b", weights2.T)
+        
         pu2 = u1 @ weights2.T
         grad_sig1 = func_grad(self.s12)
         u2 = pu2 * grad_sig1
@@ -54,26 +57,36 @@ print("weights1\n\b", weights1)
 print("weights2\n\b", weights2)
 
 plot_list = []
+loss_list = []
 
 for i in range(EPOCH):
     nn = NN(INPUT_VALUE, weights1, weights2)
     weights1, weights2 = nn.back_propagation()
     print(nn.s21)
     plot_list.append(nn.s21)
-
+    loss_list.append([abs(GT[0]-nn.s21[0]), abs(GT[1]-nn.s21[1])])
+    
 print("weights1\n\b", weights1)
 print("weights2\n\b", weights2)
 
 plot_list = np.array(plot_list)
-
+plt.figure(1)
 plt.plot(plot_list[:, 0], "-b")
 plt.plot(plot_list[:, 1], "-g")
 plt.plot([GT[0] for i in range(EPOCH)], "-r")
 plt.plot([GT[1] for i in range(EPOCH)], "-r")
-
+plt.legend(["output1", "output2", "GT"])
 plt.title("Epoch: %d (non-Linear classifier)" % EPOCH)
 
 plt.xlabel("Epoch")
 plt.ylabel("value")
+
+plt.figure(2)
+loss_list = np.array(loss_list)
+plt.plot(loss_list[:, 0], "-b")
+plt.plot(loss_list[:, 1], "-g")
+plt.plot([0 for i in range(EPOCH)], "-k")
+plt.legend(["output1", "output2"])
+plt.title("train loss graph")
 
 plt.show()

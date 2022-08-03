@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 THETA = 0
 GT = np.array([0.7, 0.2])
 LEARNING_RATE = 0.4
-EPOCH = 100
+EPOCH = 200
 
 INPUT_VALUE = np.array([0.1, 0.5])
 
@@ -43,9 +43,10 @@ class NN:
         n_weights1 = weights1 - LEARNING_RATE*(grad_weight@u2)
         
         return n_weights1, n_weights2
+
 # bias?
-weights1 = np.random.random((2, 6))
-weights2 = np.random.random((6, 2))
+weights1 = np.random.random((2, 3))
+weights2 = np.random.random((3, 2))
 
 print("weights1\n\b", weights1)
 print("weights2\n\b", weights2)
@@ -67,7 +68,7 @@ plt.plot(plot_list[:, 0], "-b")
 plt.plot(plot_list[:, 1], "-g")
 plt.plot([GT[0] for i in range(EPOCH)], "-r")
 plt.plot([GT[1] for i in range(EPOCH)], "-r")
-
+plt.legend(["output1", "output2", "GT"])
 plt.title("Epoch: %d (Linear classifier)" % EPOCH)
 
 plt.xlabel("Epoch")
